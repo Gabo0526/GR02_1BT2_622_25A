@@ -94,7 +94,7 @@
 <div class="container">
     <div class="registro">
         <h2>Recordatorios</h2>
-        <form>
+        <form action="SvRecordatorios" method="post">
             <input type="text" name="titulo" placeholder="Título" required />
             <input
                     type="text"
@@ -107,7 +107,6 @@
         </form>
         <p>Recordatorios Agregados:</p>
         <ul id="recordatorios-list">
-            <!-- Aquí se agregarán los recordatorios -->
         </ul>
     </div>
     <div class="recordatorio">
@@ -116,7 +115,7 @@
             <p>Descripción</p>
         </div>
         <div class="estadoRecordatorio">
-            <label for="Estado">
+            <label>
                 <select name="Estado" id="">
                     <option value="Pendiente">Pendiente</option>
                     <option value="Completado">Completado</option>
@@ -126,7 +125,7 @@
     </div>
 
     <div class="logout">
-        <button onclick="window.location.href='index.html'">
+        <button>
             Cerrar Sesión
         </button>
     </div>

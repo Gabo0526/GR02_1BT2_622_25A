@@ -63,7 +63,7 @@
 <body>
 <div class="card">
     <h2>Registro</h2>
-    <form>
+    <form action="SvRegistros" method="post">
         <input type="text" name="nombre" placeholder="Nombre" />
         <input type="text" name="apellido" placeholder="Apellido" />
         <input type="email" name="email" placeholder="Email" />

@@ -63,7 +63,7 @@
 <body>
 <div class="card">
   <h2>Login</h2>
-  <form action="">
+  <form action="SvUsuarios" method="get">
     <input type="email" name="email" placeholder="Email" />
     <input type="password" name="password" placeholder="Password" />
     <button type="submit">Login</button>

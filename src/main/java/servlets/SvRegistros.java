@@ -54,7 +54,12 @@ public class SvRegistros extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String nombre = request.getParameter("nombre");
+        String apellido = request.getParameter("apellido");
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+
+        System.out.println(nombre + " " + apellido + " " + email + " " + password);
     }
 
     /**
