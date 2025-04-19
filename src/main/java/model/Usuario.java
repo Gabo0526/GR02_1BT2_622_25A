@@ -3,6 +3,7 @@ package model;
 import jakarta.persistence.*;
 
 @Entity
+@NamedQuery(name = "Usuario.findUser", query = "SELECT u FROM Usuario u WHERE u.email = ?1 AND u.clave = ?2")
 @Table(name = "Usuario", schema = "railway")
 public class Usuario {
     @Id

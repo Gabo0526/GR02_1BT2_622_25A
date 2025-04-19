@@ -2,11 +2,17 @@ package servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.Persistence;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import model.Usuario;
 
 /**
  *
@@ -58,8 +64,32 @@ public class SvRegistros extends HttpServlet {
         String apellido = request.getParameter("apellido");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-
         System.out.println(nombre + " " + apellido + " " + email + " " + password);
+
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+
+        try {
+            transaction.begin();
+
+            Usuario usuario = new Usuario();
+            usuario.setNombre(nombre);
+            usuario.setApellido(apellido);
+            usuario.setEmail(email);
+            usuario.setClave(password);
+            entityManager.persist(usuario);
+
+            transaction.commit();
+        } finally {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+            entityManager.close();
+            entityManagerFactory.close();
+        }
+
+        response.sendRedirect("index.jsp");
     }
 
     /**
