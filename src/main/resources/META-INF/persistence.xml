@@ -5,5 +5,14 @@
              version="3.2">
   <persistence-unit name="default">
 
+    <class>model.Recordatorio</class>
+    <class>model.Usuario</class>
+    <properties>
+      <property name="hibernate.connection.url" value="jdbc:mysql://switchback.proxy.rlwy.net:18752/railway"/>
+      <property name="hibernate.connection.driver_class" value="com.mysql.cj.jdbc.Driver"/>
+      <property name="hibernate.connection.user" value="root"/>
+      <property name="hibernate.connection.password" value="ltfRQtpAtXRHRtJYJRWpYZdGHDBaKUYR"/>
+      <property name="hibernate.show_sql" value="true"/>
+    </properties>
   </persistence-unit>
 </persistence>

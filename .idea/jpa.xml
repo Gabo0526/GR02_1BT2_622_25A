@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JpaBuddyIdeaProjectConfig" reUseTableSchema="true">
+    <option name="reLastEntityCreationPackage" value="src/main/java/model" />
+    <option name="reverseEngineeringLastDbConnectionId" value="61a56975-1f3d-440f-989e-011ff0bd2359" />
+  </component>
+  <component name="PersistenceUnitSettings">
+    <persistence-units>
+      <persistence-unit moduleName="reminderWeb" name="default" framework="JPA" ormUnit="reminderWeb:default" defaultDataSourceId="61a56975-1f3d-440f-989e-011ff0bd2359" />
+    </persistence-units>
+  </component>
+</project>
