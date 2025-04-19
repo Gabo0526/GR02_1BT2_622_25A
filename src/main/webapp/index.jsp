@@ -68,7 +68,7 @@
     <input type="password" name="password" placeholder="Password" />
     <button type="submit">Login</button>
     <p style="text-align: center; margin-top: 20px">
-      Aun no posees una cuenta? <a href="register.html">Registrar</a>
+      Aun no posees una cuenta? <a href="register.jsp">Registrar</a>
     </p>
   </form>
 </div>
