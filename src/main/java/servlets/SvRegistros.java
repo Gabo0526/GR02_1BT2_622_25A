@@ -12,6 +12,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import logica.Autenticacion;
 import model.Usuario;
 
 /**
@@ -65,6 +66,11 @@ public class SvRegistros extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         System.out.println(nombre + " " + apellido + " " + email + " " + password);
+
+        if (Autenticacion.verificarEmail(email)) {
+            response.sendRedirect("register.jsp");
+            return;
+        }
 
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
         EntityManager entityManager = entityManagerFactory.createEntityManager();

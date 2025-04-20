@@ -51,6 +51,7 @@ public class Autenticacion {
 
             if (!query.getResultList().isEmpty()) {
                 autenticado = true;
+                System.out.println("Ya existe un usuario con ese email");
             }
 
             transaction.commit();
