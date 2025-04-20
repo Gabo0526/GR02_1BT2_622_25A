@@ -30,4 +30,33 @@ public class RecordatorioDAO extends GenericDAO<Recordatorio> {
             em.close();
         }
     }
+
+    public boolean actualizarEstado(int id, String nuevoEstado) {
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+
+        try {
+            tx.begin();
+
+            Query query = em.createNamedQuery("Recordatorio.updateReminderState");
+            query.setParameter(1, nuevoEstado);
+            query.setParameter(2, id);
+
+            int rowsUpdated = query.executeUpdate();
+
+            tx.commit();
+
+            return rowsUpdated > 0;
+
+        } catch (Exception e) {
+            if (tx.isActive()) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+            return false;
+        } finally {
+            em.close();
+        }
+    }
+
 }

@@ -1,7 +1,9 @@
 package servlets;
 
 import java.io.IOException;
+import java.util.Objects;
 
+import dao.RecordatorioDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -54,7 +56,35 @@ public class SvReminders extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        RecordatorioDAO recordatorioDAO = new RecordatorioDAO();
+
+        if (Objects.equals(request.getParameter("accion"), "ActualizarEstado")) {
+            try {
+                // 1. Obtener parámetros del formulario
+                int id = Integer.parseInt(request.getParameter("id"));
+                String nuevoEstado = request.getParameter("estado");
+
+                // 2. Actualizar el estado
+                boolean actualizado = recordatorioDAO.actualizarEstado(id, nuevoEstado);
+
+                // 3. Mensaje opcional (podrías usarlo con JS o JSTL si deseas mostrar feedback)
+                if (actualizado) {
+                    System.out.println("Estado actualizado correctamente.");
+                } else {
+                    System.out.println("No se encontró el recordatorio con ID: " + id);
+                }
+
+                // 4. Redirigir para recargar la página (patrón PRG: Post/Redirect/Get)
+                response.sendRedirect("recordatorios.jsp");
+
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "ID inválido");
+            } catch (Exception e) {
+                e.printStackTrace();
+                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error al actualizar el estado");
+            }
+        }
     }
 
     /**

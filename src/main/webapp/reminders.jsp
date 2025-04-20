@@ -60,6 +60,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
             width: 10%;
             height: 100%;
             border-radius: 0px;
@@ -90,6 +91,26 @@
         button:hover {
             background-color: rgb(23, 23, 206);
         }
+        select {
+            width: 100%;
+            padding: 8px 12px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            font-size: 14px;
+            align-content: center;
+            color: #333;
+            appearance: none; /* Oculta el estilo nativo del sistema */
+            cursor: pointer;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: #5b9bd5;
+            box-shadow: 0 0 5px rgba(91, 155, 213, 0.5);
+        }
     </style>
 </head>
 <body>
@@ -111,33 +132,35 @@
             <!-- Aquí se agregarán los recordatorios -->
         </ul>
     </div>
-        <%
-            List<Recordatorio> recordatorios = (List<Recordatorio>) request.getAttribute("recordatorios");
-            if (recordatorios != null && !recordatorios.isEmpty()) {
-                for (Recordatorio r : recordatorios) {
-        %>
-        <div class="recordatorio">
-            <div class="contenidoRecordatorio">
-                <h3><%= r.getTitulo() %> - <%= r.getFechaCreacion() %></h3>
-                <p><%= r.getDescripcion() %></p>
-            </div>
-            <div class="estadoRecordatorio">
-                <label>
-                    <select name="estado">
-                        <option value="Pendiente" <%= "Pendiente".equalsIgnoreCase(r.getEstado()) ? "selected" : "" %>>Pendiente</option>
-                        <option value="Completado" <%= "Completado".equalsIgnoreCase(r.getEstado()) ? "selected" : "" %>>Completado</option>
-                    </select>
-                </label>
-            </div>
+    <%
+        List<Recordatorio> recordatorios = (List<Recordatorio>) request.getAttribute("recordatorios");
+        if (recordatorios != null && !recordatorios.isEmpty()) {
+            for (Recordatorio r : recordatorios) {
+    %>
+    <div class="recordatorio">
+        <div class="contenidoRecordatorio">
+            <h3><%= r.getTitulo() %> - <%= r.getFechaCreacion() %></h3>
+            <p><%= r.getDescripcion() %></p>
         </div>
-        <%
-            }
-        } else {
-        %>
-        <p>No hay recordatorios disponibles.</p>
-        <%
-            }
-        %>
+        <div class="estadoRecordatorio">
+            <form action="ActualizarEstadoServlet" method="post">
+                <input type="hidden" name="id" value="<%= r.getId() %>" />
+                <select name="estado">
+                    <option value="Pendiente" <%= "Pendiente".equalsIgnoreCase(r.getEstado()) ? "selected" : "" %>>Pendiente</option>
+                    <option value="Completado" <%= "Completado".equalsIgnoreCase(r.getEstado()) ? "selected" : "" %>>Completado</option>
+                </select>
+                <button type="submit">Actualizar</button>
+            </form>
+        </div>
+    </div>
+    <%
+        }
+    } else {
+    %>
+    <p>No hay recordatorios disponibles.</p>
+    <%
+        }
+    %>
 
     <div class="logout">
         <button onclick="window.location.href='index.html'">
