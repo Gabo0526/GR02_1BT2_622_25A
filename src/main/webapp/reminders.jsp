@@ -104,7 +104,6 @@
                     placeholder="Descripción"
                     required
             />
-            <input type="date" name="fecha" required />
             <button type="submit">Agregar Recordatorio</button>
         </form>
         <p>Recordatorios Agregados:</p>
