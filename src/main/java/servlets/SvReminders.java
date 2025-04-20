@@ -1,7 +1,7 @@
 package servlets;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -13,7 +13,7 @@ import jakarta.servlet.http.HttpServletResponse;
  * @author DVC
  */
 @WebServlet(name = "SvRecordatorios", urlPatterns = {"/SvRecordatorios"})
-public class SvRecordatorios extends HttpServlet {
+public class SvReminders extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>

@@ -1,7 +1,6 @@
 package servlets;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -12,7 +11,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import logica.Autenticacion;
+import utils.Autenticacion;
 import model.Usuario;
 
 /**
@@ -20,7 +19,7 @@ import model.Usuario;
  * @author DVC
  */
 @WebServlet(name = "SvRegistros", urlPatterns = {"/SvRegistros"})
-public class SvRegistros extends HttpServlet {
+public class SvRegister extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>

@@ -7,7 +7,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import logica.Autenticacion;
+import utils.Autenticacion;
 
 
 /**
@@ -15,7 +15,7 @@ import logica.Autenticacion;
  * @author DVC
  */
 @WebServlet(name = "SvUsuarios", urlPatterns = {"/SvUsuarios"})
-public class SvUsuarios extends HttpServlet {
+public class SvUser extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -27,7 +27,7 @@ public class SvUsuarios extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         if (Autenticacion.autenticar(email, password)) {
-            response.sendRedirect("recordatorios.jsp");
+            response.sendRedirect("reminders.jsp");
         } else {
             response.sendRedirect("index.jsp");
         }

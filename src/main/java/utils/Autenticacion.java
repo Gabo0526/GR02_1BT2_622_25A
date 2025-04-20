@@ -1,4 +1,4 @@
-package logica;
+package utils;
 
 import jakarta.persistence.*;
 import model.Usuario;
