@@ -1,4 +1,5 @@
-<%--
+<%@ page import="model.Recordatorio" %>
+<%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
   User: DVC
   Date: 19/4/2025
@@ -57,6 +58,7 @@
         }
         .estadoRecordatorio {
             display: flex;
+            flex-direction: column;
             align-items: center;
             width: 10%;
             height: 100%;
@@ -94,7 +96,7 @@
 <div class="container">
     <div class="registro">
         <h2>Recordatorios</h2>
-        <form action="SvRecordatorios" method="post">
+        <form>
             <input type="text" name="titulo" placeholder="Título" required />
             <input
                     type="text"
@@ -107,25 +109,39 @@
         </form>
         <p>Recordatorios Agregados:</p>
         <ul id="recordatorios-list">
+            <!-- Aquí se agregarán los recordatorios -->
         </ul>
     </div>
-    <div class="recordatorio">
-        <div class="contenidoRecordatorio">
-            <h3>Titulo + fecha</h3>
-            <p>Descripción</p>
+        <%
+            List<Recordatorio> recordatorios = (List<Recordatorio>) request.getAttribute("recordatorios");
+            if (recordatorios != null && !recordatorios.isEmpty()) {
+                for (Recordatorio r : recordatorios) {
+        %>
+        <div class="recordatorio">
+            <div class="contenidoRecordatorio">
+                <h3><%= r.getTitulo() %> - <%= r.getFechaCreacion() %></h3>
+                <p><%= r.getDescripcion() %></p>
+            </div>
+            <div class="estadoRecordatorio">
+                <label>
+                    <select name="estado">
+                        <option value="Pendiente" <%= "Pendiente".equalsIgnoreCase(r.getEstado()) ? "selected" : "" %>>Pendiente</option>
+                        <option value="Completado" <%= "Completado".equalsIgnoreCase(r.getEstado()) ? "selected" : "" %>>Completado</option>
+                    </select>
+                </label>
+            </div>
         </div>
-        <div class="estadoRecordatorio">
-            <label>
-                <select name="Estado" id="">
-                    <option value="Pendiente">Pendiente</option>
-                    <option value="Completado">Completado</option>
-                </select>
-            </label>
-        </div>
-    </div>
+        <%
+            }
+        } else {
+        %>
+        <p>No hay recordatorios disponibles.</p>
+        <%
+            }
+        %>
 
     <div class="logout">
-        <button>
+        <button onclick="window.location.href='index.html'">
             Cerrar Sesión
         </button>
     </div>
