@@ -1,4 +1,4 @@
-package utils;
+package com.ma.reminderweb.utils;
 
 import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;

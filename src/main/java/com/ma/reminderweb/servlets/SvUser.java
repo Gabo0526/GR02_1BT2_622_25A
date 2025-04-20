@@ -1,9 +1,9 @@
-package servlets;
+package com.ma.reminderweb.servlets;
 
 import java.io.IOException;
 
-import dao.RecordatorioDAO;
-import dao.UsuarioDAO;
+import com.ma.reminderweb.dao.RecordatorioDAO;
+import com.ma.reminderweb.dao.UsuarioDAO;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -11,7 +11,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import model.Usuario;
+import com.ma.reminderweb.model.Usuario;
 
 
 /**

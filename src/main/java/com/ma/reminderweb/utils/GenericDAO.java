@@ -1,4 +1,4 @@
-package utils;
+package com.ma.reminderweb.utils;
 
 import jakarta.persistence.*;
 import java.util.List;
