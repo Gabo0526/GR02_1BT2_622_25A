@@ -2,16 +2,12 @@ package servlets;
 
 import java.io.IOException;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.EntityTransaction;
-import jakarta.persistence.Persistence;
+import dao.UsuarioDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import utils.Autenticacion;
 import model.Usuario;
 
 /**
@@ -66,33 +62,21 @@ public class SvRegister extends HttpServlet {
         String password = request.getParameter("password");
         System.out.println(nombre + " " + apellido + " " + email + " " + password);
 
-        if (Autenticacion.verificarEmail(email)) {
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+
+        if (usuarioDAO.verificarEmail(email)) {
+            // El email ya existe
             response.sendRedirect("register.jsp");
             return;
         }
 
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
+        Usuario usuario = new Usuario();
+        usuario.setNombre(nombre);
+        usuario.setApellido(apellido);
+        usuario.setEmail(email);
+        usuario.setClave(password);
 
-        try {
-            transaction.begin();
-
-            Usuario usuario = new Usuario();
-            usuario.setNombre(nombre);
-            usuario.setApellido(apellido);
-            usuario.setEmail(email);
-            usuario.setClave(password);
-            entityManager.persist(usuario);
-
-            transaction.commit();
-        } finally {
-            if (transaction.isActive()) {
-                transaction.rollback();
-            }
-            entityManager.close();
-            entityManagerFactory.close();
-        }
+        usuarioDAO.save(usuario);
 
         response.sendRedirect("index.jsp");
     }

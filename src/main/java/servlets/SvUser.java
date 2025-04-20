@@ -2,16 +2,15 @@ package servlets;
 
 import java.io.IOException;
 
-import jakarta.persistence.*;
+import dao.RecordatorioDAO;
+import dao.UsuarioDAO;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import model.Recordatorio;
 import model.Usuario;
-import utils.Autenticacion;
 
 
 /**
@@ -32,31 +31,14 @@ public class SvUser extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
-        Usuario usuario = Autenticacion.autenticar(email, password);
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        RecordatorioDAO recordatorioDAO = new RecordatorioDAO();
+
+        Usuario usuario = usuarioDAO.autenticar(email, password);
 
         if (usuario != null) {
-            // Obtener los recordatorios del usuario
-            EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
-            EntityManager entityManager = entityManagerFactory.createEntityManager();
-            EntityTransaction transaction = entityManager.getTransaction();
-
-            try {
-                transaction.begin();
-
-                TypedQuery<Recordatorio> namedQuery =  entityManager.createNamedQuery("Recordatorio.findAllbyUser", Recordatorio.class);
-                namedQuery.setParameter(1, usuario.getId());
-                request.setAttribute("recordatorios", namedQuery.getResultList());
-
-                transaction.commit();
-            } finally {
-                if (transaction.isActive()) {
-                    transaction.rollback();
-                }
-                entityManager.close();
-                entityManagerFactory.close();
-            }
-
             request.setAttribute("usuario", usuario);
+            request.setAttribute("recordatorios", recordatorioDAO.obtenerPorUsuario(usuario.getId()));
 
             RequestDispatcher dispatcher = request.getRequestDispatcher("reminders.jsp");
             dispatcher.forward(request, response);
