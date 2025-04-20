@@ -1,7 +1,6 @@
 package servlets;
 
 import java.io.IOException;
-import java.util.Objects;
 
 import dao.RecordatorioDAO;
 import jakarta.servlet.RequestDispatcher;
@@ -11,7 +10,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import jdk.swing.interop.SwingInterOpUtils;
+import model.Recordatorio;
 import model.Usuario;
 
 
@@ -61,10 +60,20 @@ public class SvReminders extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        HttpSession session = request.getSession(false);
+        Usuario usuario = (session != null) ? (Usuario) session.getAttribute("usuario") : null;
+
+        if (usuario == null) {
+            response.sendRedirect("index.jsp");
+            return; // Salimos si no hay sesión activa
+        }
+
         RecordatorioDAO recordatorioDAO = new RecordatorioDAO();
 
-        if (Objects.equals(request.getParameter("accion"), "ActualizarEstado")) {
-            try {
+        String accion = request.getParameter("accion");
+
+        try {
+            if ("ActualizarEstado".equals(accion)) {
                 int id = Integer.parseInt(request.getParameter("id"));
                 String nuevoEstado = request.getParameter("estado");
 
@@ -76,30 +85,33 @@ public class SvReminders extends HttpServlet {
                     System.out.println("No se encontró el recordatorio con ID: " + id);
                 }
 
-                // Obtener el usuario desde sesión
-                HttpSession session = request.getSession(false);
-                Usuario usuario = (Usuario) session.getAttribute("usuario");
+            } else if ("AgregarRecordatorio".equals(accion)) {
+                Recordatorio recordatorio = new Recordatorio();
+                recordatorio.setTitulo(request.getParameter("titulo"));
+                recordatorio.setDescripcion(request.getParameter("descripcion"));
+                recordatorio.setFechaCreacion(java.time.Instant.now());
+                recordatorio.setUsuarioFk(usuario);
 
-                if (usuario != null) {
-                    System.out.println("GRACIAS PAPA DIOS");
-                    request.setAttribute("usuario", usuario);
-                    request.setAttribute("recordatorios", recordatorioDAO.obtenerPorUsuario(usuario.getId()));
-                }
+                recordatorioDAO.save(recordatorio);
 
-                // Forward a la JSP sin perder atributos
-                RequestDispatcher dispatcher = request.getRequestDispatcher("reminders.jsp");
-                dispatcher.forward(request, response);
-
-            } catch (NumberFormatException e) {
-                e.printStackTrace();
-                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "ID inválido");
-            } catch (Exception e) {
-                e.printStackTrace();
-                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error al actualizar el estado");
+                System.out.println("Recordatorio agregado.");
             }
+
+            // Recargar lista de recordatorios
+            request.setAttribute("usuario", usuario);
+            request.setAttribute("recordatorios", recordatorioDAO.obtenerPorUsuario(usuario.getId()));
+
+            RequestDispatcher dispatcher = request.getRequestDispatcher("reminders.jsp");
+            dispatcher.forward(request, response);
+
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "ID inválido");
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error al procesar la solicitud");
         }
     }
-
 
     /**
      * Returns a short description of the servlet.

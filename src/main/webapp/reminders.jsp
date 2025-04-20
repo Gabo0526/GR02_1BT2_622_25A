@@ -117,7 +117,8 @@
 <div class="container">
     <div class="registro">
         <h2>Recordatorios</h2>
-        <form>
+        <form action="SvRecordatorios" method="post">
+            <input type="hidden" name="accion" value="AgregarRecordatorio" />
             <input type="text" name="titulo" placeholder="Título" required />
             <input
                     type="text"
@@ -164,9 +165,11 @@
     %>
 
     <div class="logout">
-        <button onclick="window.location.href='index.html'">
-            Cerrar Sesión
-        </button>
+        <form action="LogoutServlet" method="get">
+            <button type="submit">
+                Cerrar Sesión
+            </button>
+        </form>
     </div>
 </div>
 </body>

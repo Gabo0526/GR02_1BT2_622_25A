@@ -58,5 +58,4 @@ public class RecordatorioDAO extends GenericDAO<Recordatorio> {
             em.close();
         }
     }
-
 }
