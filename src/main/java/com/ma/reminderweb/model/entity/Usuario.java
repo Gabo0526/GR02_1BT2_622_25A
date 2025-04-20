@@ -1,4 +1,4 @@
-package com.ma.reminderweb.model;
+package com.ma.reminderweb.model.entity;
 
 import jakarta.persistence.*;
 

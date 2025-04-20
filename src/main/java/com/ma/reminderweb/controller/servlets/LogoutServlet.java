@@ -1,4 +1,4 @@
-package com.ma.reminderweb.servlets;
+package com.ma.reminderweb.controller.servlets;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;

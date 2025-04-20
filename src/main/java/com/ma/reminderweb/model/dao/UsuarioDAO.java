@@ -1,7 +1,7 @@
-package com.ma.reminderweb.dao;
+package com.ma.reminderweb.model.dao;
 
 import jakarta.persistence.*;
-import com.ma.reminderweb.model.Usuario;
+import com.ma.reminderweb.model.entity.Usuario;
 import com.ma.reminderweb.utils.GenericDAO;
 
 public class UsuarioDAO extends GenericDAO<Usuario> {

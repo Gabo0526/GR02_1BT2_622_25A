@@ -1,4 +1,4 @@
-<%@ page import="com.ma.reminderweb.model.Recordatorio" %>
+<%@ page import="com.ma.reminderweb.model.entity.Recordatorio" %>
 <%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
   User: DVC

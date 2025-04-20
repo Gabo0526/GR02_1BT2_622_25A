@@ -1,7 +1,7 @@
-package com.ma.reminderweb.dao;
+package com.ma.reminderweb.model.dao;
 
 import jakarta.persistence.*;
-import com.ma.reminderweb.model.Recordatorio;
+import com.ma.reminderweb.model.entity.Recordatorio;
 import com.ma.reminderweb.utils.GenericDAO;
 
 import java.util.List;

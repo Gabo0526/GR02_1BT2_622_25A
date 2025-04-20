@@ -5,8 +5,8 @@
              version="3.2">
   <persistence-unit name="default">
 
-    <class>com.ma.reminderweb.model.Recordatorio</class>
-    <class>com.ma.reminderweb.model.Usuario</class>
+    <class>com.ma.reminderweb.model.entity.Recordatorio</class>
+    <class>com.ma.reminderweb.model.entity.Usuario</class>
     <properties>
       <property name="hibernate.connection.url" value="jdbc:mysql://switchback.proxy.rlwy.net:18752/railway"/>
       <property name="hibernate.connection.driver_class" value="com.mysql.cj.jdbc.Driver"/>
