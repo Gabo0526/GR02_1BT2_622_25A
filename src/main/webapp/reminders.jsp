@@ -143,8 +143,9 @@
             <p><%= r.getDescripcion() %></p>
         </div>
         <div class="estadoRecordatorio">
-            <form action="ActualizarEstadoServlet" method="post">
+            <form action="SvRecordatorios" method="post">
                 <input type="hidden" name="id" value="<%= r.getId() %>" />
+                <input type="hidden" name="accion" value="ActualizarEstado" />
                 <select name="estado">
                     <option value="Pendiente" <%= "Pendiente".equalsIgnoreCase(r.getEstado()) ? "selected" : "" %>>Pendiente</option>
                     <option value="Completado" <%= "Completado".equalsIgnoreCase(r.getEstado()) ? "selected" : "" %>>Completado</option>

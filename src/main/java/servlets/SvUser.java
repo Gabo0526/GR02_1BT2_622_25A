@@ -10,6 +10,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import model.Usuario;
 
 
@@ -37,7 +38,11 @@ public class SvUser extends HttpServlet {
         Usuario usuario = usuarioDAO.autenticar(email, password);
 
         if (usuario != null) {
-            request.setAttribute("usuario", usuario);
+            // Guardar el usuario en la sesión
+            HttpSession session = request.getSession();
+            session.setAttribute("usuario", usuario);
+
+            // Obtener recordatorios del usuario y enviarlos al JSP
             request.setAttribute("recordatorios", recordatorioDAO.obtenerPorUsuario(usuario.getId()));
 
             RequestDispatcher dispatcher = request.getRequestDispatcher("reminders.jsp");
@@ -46,7 +51,6 @@ public class SvUser extends HttpServlet {
             response.sendRedirect("index.jsp");
         }
     }
-
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
