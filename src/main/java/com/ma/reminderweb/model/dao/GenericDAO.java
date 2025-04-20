@@ -1,5 +1,6 @@
-package com.ma.reminderweb.utils;
+package com.ma.reminderweb.model.dao;
 
+import com.ma.reminderweb.utils.JpaUtil;
 import jakarta.persistence.*;
 import java.util.List;
 
