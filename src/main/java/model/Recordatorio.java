@@ -7,6 +7,7 @@ import org.hibernate.annotations.DynamicInsert;
 import java.time.Instant;
 
 @Entity
+@NamedQuery(name = "Recordatorio.findAllbyUser", query = "SELECT r FROM Recordatorio r join Usuario u on r.usuarioFk.id = u.id where u.id = ?1")
 @DynamicInsert // Permite que se inserte un registro sin tener que especificar todos los campos, para que se genere un valor por defecto
 @Table(name = "Recordatorio", schema = "railway")
 public class Recordatorio {

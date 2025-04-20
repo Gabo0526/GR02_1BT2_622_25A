@@ -4,11 +4,11 @@ import jakarta.persistence.*;
 import model.Usuario;
 
 public class Autenticacion {
-    public static boolean autenticar(String email, String password) {
+    public static Usuario autenticar(String email, String password) {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
-        boolean autenticado = false;
+        Usuario usuario = null;
 
         try {
             transaction.begin();
@@ -17,12 +17,10 @@ public class Autenticacion {
             queryUsuario.setParameter(1, email);
             queryUsuario.setParameter(2, password);
 
-            for (Usuario usuario : queryUsuario.getResultList()) {
-                System.out.println(usuario);
-            }
-
             if (!queryUsuario.getResultList().isEmpty()) {
-                autenticado = true;
+                Usuario result = queryUsuario.getSingleResult();
+                System.out.println(result.toString());
+                usuario = result;
             }
 
             transaction.commit();
@@ -34,7 +32,7 @@ public class Autenticacion {
             entityManagerFactory.close();
         }
 
-        return autenticado;
+        return usuario;
     }
 
     public static boolean verificarEmail(String email) {
